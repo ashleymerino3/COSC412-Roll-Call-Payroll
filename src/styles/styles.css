@@ -17,6 +17,12 @@ body {
   line-height: 1.5;
 }
 
+.home-container {
+  background-color: lightblue; 
+  padding: 1rem;          
+  color: white;          
+}
+
 /* images and videos max out at full width */
 img,
 video {
