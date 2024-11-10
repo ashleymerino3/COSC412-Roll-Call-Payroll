@@ -1,16 +1,21 @@
 import React from "react";
-
-
-// Import the Home page component
-import Home from "./pages/home.jsx";
-
-// Import and apply CSS stylesheet
-import "./styles/styles.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Updated imports for v6
+import Home from "./pages/home";
+import Profile from "./pages/profile";
+import TimeTracking from "./pages/timetracking";
+import Payroll from "./pages/payroll";
+import Schedule from "./pages/schedule";
 
 export default function App() {
   return (
-    <>
-     <Home />
-    </>
+    <Router>
+      <Routes> {/* Use Routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/time-tracking" element={<TimeTracking />} />
+        <Route path="/payroll" element={<Payroll />} />
+        <Route path="/schedule" element={<Schedule />} />
+      </Routes>
+    </Router>
   );
 }
