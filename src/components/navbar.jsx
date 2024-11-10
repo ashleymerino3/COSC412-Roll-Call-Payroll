@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../styles/styles.css";
 
 export default function Navbar() {
@@ -6,16 +7,16 @@ export default function Navbar() {
     <nav className="side-nav">
       <ul>
         <li>
-          <a href="#">Profile</a>
+          <Link to="/profile">Profile</Link> {/* Link to Profile route */}
         </li>
         <li>
-          <a href="#">Time Tracking</a>
+          <Link to="/time-tracking">Time Tracking</Link> {/* Link to Time Tracking route */}
         </li>
         <li>
-          <a href="#">Payroll</a>
+          <Link to="/payroll">Payroll</Link> {/* Link to Payroll route */}
         </li>
         <li>
-          <a href="#">Schedule</a>
+          <Link to="/schedule">Schedule</Link> {/* Link to Schedule route */}
         </li>
       </ul>
     </nav>
