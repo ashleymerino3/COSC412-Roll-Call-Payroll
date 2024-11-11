@@ -7,6 +7,9 @@ export default function Navbar() {
     <nav className="side-nav">
       <ul>
         <li>
+          <Link to="/">Home </Link> {/* Link to the Home component (Main Menu) */}
+        </li>
+        <li>
           <Link to="/profile">Profile</Link> {/* Link to Profile route */}
         </li>
         <li>
