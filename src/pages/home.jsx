@@ -1,5 +1,6 @@
 import * as React from "react";
 import Navbar from "../components/navbar"; // Import the Navbar component
+import Stopwatch from "../components/stopwatch";
 import "../styles/styles.css"; 
 
 export default function Home() {
@@ -12,6 +13,8 @@ export default function Home() {
       <div className="home-container">
         <h1 className="title">{hello}</h1>
         <p>Welcome Back User!</p>
+        <Stopwatch /> {/* Add the Stopwatch component here */}
+        
       </div>
     </div>
   );
