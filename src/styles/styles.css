@@ -22,7 +22,7 @@ body {
   left: 0;
   width: 250px; /* Set width for sidebar */
   height: 100%; /* Full height */
-  background-color: #333; /* Dark background for sidebar */
+  background-color: #333333; /* Dark background for sidebar */
   color: white;
   padding-top: 20px;
 }
@@ -50,6 +50,35 @@ body {
 
 /* Main content area */
 .home-container {
+  margin-left: 250px; /* Push content to the right of the sidebar */
+  padding: 20px;
+  background-color: lightblue; /* Background for the main content */
+  color: white; /* Text color */
+  height: 100vh; /* Full height */
+}
+.pay-container {
+  margin-left: 250px; /* Push content to the right of the sidebar */
+  padding: 20px;
+  background-color: lightblue; /* Background for the main content */
+  color: white; /* Text color */
+  height: 100vh; /* Full height */
+}
+
+.profile-container {
+  margin-left: 250px; /* Push content to the right of the sidebar */
+  padding: 20px;
+  background-color: lightblue; /* Background for the main content */
+  color: white; /* Text color */
+  height: 100vh; /* Full height */
+}
+.schedule-container {
+  margin-left: 250px; /* Push content to the right of the sidebar */
+  padding: 20px;
+  background-color: lightblue; /* Background for the main content */
+  color: white; /* Text color */
+  height: 100vh; /* Full height */
+}
+.time-container {
   margin-left: 250px; /* Push content to the right of the sidebar */
   padding: 20px;
   background-color: lightblue; /* Background for the main content */
