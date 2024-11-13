@@ -13,9 +13,8 @@ export default function Home() {
       <div className="home-container">
         <h1 className="title">{hello}</h1>
         <p>Welcome Back User!</p>
-        <div className = "stopwatch-container">
         <Stopwatch /> {/* Add the Stopwatch component here */}
-        </div>
+        
       </div>
     </div>
   );
