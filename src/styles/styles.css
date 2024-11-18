@@ -124,12 +124,12 @@ video {
 
 .shift-table th,
 .shift-table td {
-  border: 1px solid #ddd;
+  border: 1px solid #999999;
   padding: 8px;
   text-align: center;
 }
-
+/*#b4ccff   #C7D5F3*/
 .shift-table th {
-  background-color: #f4f4f4;
+  background-color: #b4ccff ;
   font-weight: bold;
 }
