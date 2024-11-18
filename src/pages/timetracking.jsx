@@ -15,10 +15,17 @@ export default function TimeTracking() {
   useEffect(() => {
     const fetchShifts = async () => {
       try {
-        // Query the database for shifts for user #2
+        // Fetch shifts and notes for user #2
         const { data, error } = await supabase
           .from("shifts")
-          .select("*")
+          .select(`
+            shift_id,
+            start_time_stamp,
+            end_time_stamp,
+            shift_notes (
+              note_text
+            )
+          `)
           .eq("userid", 2);
 
         if (error) {
@@ -45,6 +52,16 @@ export default function TimeTracking() {
     return { date, time };
   };
 
+  // Calculate total hours worked during a shift
+  const calculateTotalHours = (start, end) => {
+    if (!start || !end) return "N/A";
+    const startTime = new Date(start);
+    const endTime = new Date(end);
+    const diffInMs = endTime - startTime; // Difference in milliseconds
+    const diffInHours = diffInMs / (1000 * 60 * 60); // Convert to hours
+    return diffInHours.toFixed(2); // Format to 2 decimal places
+  };
+
   return (
     <div className="container">
       <Navbar /> {/* Sidebar navigation */}
@@ -60,17 +77,26 @@ export default function TimeTracking() {
                 <th>Date</th>
                 <th>Start Time</th>
                 <th>End Time</th>
+                <th>Total Hours</th>
+                <th>Shift Notes</th>
               </tr>
             </thead>
             <tbody>
               {shifts.map((shift) => {
                 const start = formatDateTime(shift.start_time_stamp);
                 const end = formatDateTime(shift.end_time_stamp);
+                const totalHours = calculateTotalHours(
+                  shift.start_time_stamp,
+                  shift.end_time_stamp
+                );
+                const notes = shift.shift_notes?.[0]?.note_text || "";
                 return (
                   <tr key={shift.shift_id}>
                     <td>{start.date}</td>
                     <td>{start.time}</td>
                     <td>{end.time}</td>
+                    <td>{totalHours}</td>
+                    <td>{notes}</td>
                   </tr>
                 );
               })}
