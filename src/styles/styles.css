@@ -14,9 +14,6 @@ body {
   font-family: sans-serif;
   line-height: 1.5;
 }
-.company-name{
-  
-}
 .stopwatch-container {
   background-color:  #b4ccff;
   padding: 20px;
@@ -118,4 +115,38 @@ img,
 video {
   height: auto;
   max-width: 100%;
+}
+.shift-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.shift-table th,
+.shift-table td {
+  border: 1px solid #999999;
+  padding: 8px;
+  text-align: center;
+}
+/*#b4ccff   #C7D5F3*/
+.shift-table th {
+  background-color: #b4ccff ;
+  font-weight: bold;
+}
+.payment-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.payment-table th,
+.payment-table td {
+  border: 1px solid #999999;
+  padding: 8px;
+  text-align: center;
+}
+/*#b4ccff   #C7D5F3*/
+.payment-table th {
+  background-color: #b4ccff ;
+  font-weight: bold;
 }
