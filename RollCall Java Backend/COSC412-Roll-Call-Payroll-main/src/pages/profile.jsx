@@ -11,19 +11,18 @@ const supabase = createClient(
 );
 
 export default function Profile() {
-  const [user, setUsers] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    getUser();
+    getUsers();
   }, []);
 
-  async function getUser() {
-    const { data, error } = await supabase
-                            .from("users")
-                            .select()
-                            .eq("userid", 2);
+  async function getUsers() {
+    const { data } = await supabase.from("users").select();
     setUsers(data);
   }
+  
+  var user = users[0];
   
   if(user != null){
     return (
