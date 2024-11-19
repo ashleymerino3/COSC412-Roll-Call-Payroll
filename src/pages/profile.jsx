@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Navbar from "../components/navbar";
 import "../styles/styles.css";
 import { useEffect, useState } from "react";
@@ -40,8 +39,11 @@ export default function Profile() {
         <p key={user.payrate}>Pay Rate: ${user.payrate}</p>
         <p key={user.address}>Address: {user.address}</p>
 
-        <button type="button">
-          <Link to="/profileEdit">Edit Profile</Link>
+        <button
+          type="button"
+          onclick="document.getElementById('demo').innerHTML = test"
+        >
+          Edit User Information
         </button>
       </div>
     </div>
@@ -61,9 +63,12 @@ export default function Profile() {
         <p>Job Role: </p>
         <p>Pay Rate: </p>
         <p>Address: </p>
-        
-        <button type="button">
-          <Link to="/profileEdit">Edit Profile</Link>
+
+        <button
+          type="button"
+          onclick="document.getElementById('demo').innerHTML = test"
+        >
+          Edit User Information
         </button>
       </div>
     </div>
