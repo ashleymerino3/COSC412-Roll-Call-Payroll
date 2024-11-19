@@ -1,0 +1,152 @@
+/* A minimalist set of CSS resets */
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+/* Adjust typography defaults */
+body {
+  margin: 0;
+  font-family: sans-serif;
+  line-height: 1.5;
+}
+.stopwatch-container {
+  background-color:  #b4ccff;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 300px;
+  height: 350px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  bottom: 50%;
+  border: 3px solid #333333; 
+  font-family: 'Cambria', serif;
+  position: absolute; /* Position relative to the nearest positioned ancestor */
+  bottom: 20px; /* Adjust this value to control the distance from the bottom */
+  left: 50%; /* Horizontally center the box */
+  transform: translateX(-10%); /* Ensure it's perfectly centered */
+}
+/* Sidebar (Navigation) Styles */
+.side-nav {
+  position: fixed; /* Fixed sidebar on the left */
+  top: 0;
+  left: 0;
+  width: 250px; /* Set width for sidebar */
+  height: 100%; /* Full height */
+  background-color: #333333; /* Dark background for sidebar */
+  color: white;
+  padding-top: 20px;
+  font-family: 'Cambria', serif;
+}
+
+.side-nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.side-nav ul li {
+  padding: 15px;
+  text-align: left;
+}
+
+.side-nav ul li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+
+.side-nav ul li a:hover {
+  background-color: #a3b6dd; /* Highlight on hover */
+}
+
+/* Main content area */
+.home-container {
+  margin-left: 250px; /* Push content to the right of the sidebar */
+  padding: 20px;
+  background-color: white;
+  color: #333333; /* Text color */
+  height: 100vh;
+  font-family: 'Cambria', serif;
+}
+.pay-container {
+  margin-left: 250px; /* Push content to the right of the sidebar */
+  padding: 20px;
+  background-color: white; /* Background for the main content */
+  color: #333333; /* Text color */
+  height: 100vh; /* Full height */
+}
+
+.profile-container {
+  margin-left: 250px; /* Push content to the right of the sidebar */
+  padding: 20px;
+  background-color: white; /* Background for the main content */
+  color: #333333; /* Text color */
+  height: 100vh; /* Full height */
+}
+.schedule-container {
+  margin-left: 250px; /* Push content to the right of the sidebar */
+  padding: 20px;
+  background-color: white; /* Background for the main content */
+  color: #333333; /* Text color */
+  height: 100vh; /* Full height */
+}
+.time-container {
+  margin-left: 250px; /* Push content to the right of the sidebar */
+  padding: 20px;
+  background-color: white; /* Background for the main content */
+  color: black; /* Text color */
+  height: 100vh; /* Full height */
+}
+
+/* Typography for title */
+.title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+/* Ensure images and videos are responsive */
+img,
+video {
+  height: auto;
+  max-width: 100%;
+}
+.shift-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.shift-table th,
+.shift-table td {
+  border: 1px solid #999999;
+  padding: 8px;
+  text-align: center;
+}
+/*#b4ccff   #C7D5F3*/
+.shift-table th {
+  background-color: #b4ccff ;
+  font-weight: bold;
+}
+.payment-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.payment-table th,
+.payment-table td {
+  border: 1px solid #999999;
+  padding: 8px;
+  text-align: center;
+}
+/*#b4ccff   #C7D5F3*/
+.payment-table th {
+  background-color: #b4ccff ;
+  font-weight: bold;
+}

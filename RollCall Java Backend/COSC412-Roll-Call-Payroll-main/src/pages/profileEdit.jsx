@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/navbar";
 import "../styles/styles.css";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
@@ -11,27 +11,18 @@ const supabase = createClient(
 );
 
 export default function ProfileEdit() {
-  const [user, setUsers] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    getUser();
+    getUsers();
   }, []);
 
-  async function getUser() {
-    const { data, error } = await supabase
-                            .from("users")
-                            .select()
-                            .eq("userid", 2);
+  async function getUsers() {
+    const { data } = await supabase.from("users").select();
     setUsers(data);
   }
   
-  async function updateUserData(){
-    const { error } = await supabase
-        .from("users")
-        .update({ username: document.getElementById("eUsername").value.toString})
-        .eq("userid", user.userid);
-  }
-  
+  var user = users[0];
   
   if(user != null){
     return (
@@ -41,35 +32,33 @@ export default function ProfileEdit() {
         <h1>Edit Profile Page</h1>
         <p>Edit your profile</p>
         
-        
-        <label for="eUsername">Username: </label><br></br>
-        <input type="text" id="eUsername" defaultValue={user.username}></input><br></br>
+        <form action="/profile">
+          <label for="eUsername">Username: </label><br></br>
+          <input type="text" id="eUsername" name="eUsername" value={user.username}></input><br></br>
           
-        <label for="eFirstName">First name: </label><br></br>
-        <input type="text" id="eFirstName" defaultValue={user.first_name}></input><br></br>
+          <label for="eFirstName">First name: </label><br></br>
+          <input type="text" id="eFirstName" name="eFirstName" value={user.first_name}></input><br></br>
           
-        <label for="eLastName">Last name: </label><br></br>
-        <input type="text" id="eLastName" defaultValue={user.last_name}></input><br></br>
+          <label for="eLastName">Last name: </label><br></br>
+          <input type="text" id="eLastName" name="eLastName" value={user.last_name}></input><br></br>
           
-        <label for="eEmail">Email: </label><br></br>
-        <input type="text" id="eEmail" defaultValue={user.email}></input><br></br>
+          <label for="eEmail">Email: </label><br></br>
+          <input type="text" id="eEmail" name="eEmail" value={user.email}></input><br></br>
           
-        <label for="ePhone">Phone Number: </label><br></br>
-        <input type="text" id="ePhone" defaultValue={user.phone}></input><br></br>
+          <label for="ePhone">Phone Number: </label><br></br>
+          <input type="text" id="ePhone" name="ePhone" value={user.phone}></input><br></br>
           
-        <label for="eJob">Job Role: </label><br></br>
-        <input type="text" id="eJob" defaultValue={user.position}></input><br></br>
+          <label for="eJob">Job Role: </label><br></br>
+          <input type="text" id="eJob" name="eJob" value={user.position}></input><br></br>
           
-        <label for="ePay">Pay Rate: </label><br></br>
-        <input type="text" id="ePay" defaultValue={user.payrate}></input><br></br>
+          <label for="ePay">Pay Rate: </label><br></br>
+          <input type="text" id="ePay" name="ePay" value={user.payrate}></input><br></br>
           
-        <label for="eAddress">Address: </label><br></br>
-        <input type="text" id="eAddress" defaultValue={user.address}></input><br></br>
-        <p></p>
-        
-        <button onclick={updateUserData()}>
-          <Link to="/profile">Edit Profile</Link>
-        </button>
+          <label for="eAddress">Address: </label><br></br>
+          <input type="text" id="eAddress" name="eAddress" value={user.address}></input><br></br>
+          <p></p>
+          <input type="submit" value="Submit"></input>
+        </form>
 
       </div>
     </div>
