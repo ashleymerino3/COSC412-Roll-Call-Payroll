@@ -101,7 +101,7 @@ export default function Payroll() {
                 <th>Username</th>
                 <th>Payrate</th>
                 <th>Total Hours</th>
-                <th>Expected Payment Date</th>
+                <th>Payment Date</th>
                 <th>Expected Payment Amount</th>
                 <th>Actual Payment Amount</th>
               </tr>
