@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
-import UserContext from "../context/UserContext";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import "../styles/styles.css";
 import { createClient } from "@supabase/supabase-js";
@@ -10,7 +9,6 @@ const supabase = createClient(
 );
 
 export default function TimeTracking() {
-  const { currentUser } = useContext(UserContext);
   const [shifts, setShifts] = useState([]);
   const [loading, setLoading] = useState(true);
 

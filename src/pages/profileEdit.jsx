@@ -2,8 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/navbar";
 import "../styles/styles.css";
-import { useEffect, useState, useRef, useContext } from "react";
-import UserContext from "../context/UserContext";
+import { useEffect, useState, useRef } from "react";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
@@ -12,7 +11,6 @@ const supabase = createClient(
 );
 
 export default function ProfileEdit() {
-  const { currentUser } = useContext(UserContext);
   const [user, setUsers] = useState([]);
 
   useEffect(() => {
