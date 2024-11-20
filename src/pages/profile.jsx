@@ -1,74 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/navbar";
 import "../styles/styles.css";
-import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
-  "https://owvjnuefadfwxhosbpxj.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93dmpudWVmYWRmd3hob3NicHhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE0NDA3MjYsImV4cCI6MjA0NzAxNjcyNn0.yrV7Pg4IC621kuGGwnLcAoPWnOUg4eQ2PutKNJLPtjs"
+  "https://qrurdemqnmtbzyckapnl.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFydXJkZW1xbm10Ynp5Y2thcG5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIwNjUwMDQsImV4cCI6MjA0NzY0MTAwNH0.jOA0Z8WopLVrbAI4QfO89r2qg8KB9yIxi13hNvcf9cs"
 );
 
 export default function Profile() {
-  const [user, setUsers] = useState([]);
+  const [user, setUser] = useState(null); // Initialize as null
+  const [error, setError] = useState(null); // Track errors
 
   useEffect(() => {
+    const getUser = async () => {
+      const { data, error } = await supabase.from("users").select().eq("userid", 2);
+      if (error) {
+        console.error("Error fetching user:", error);
+        setError(error);
+      } else {
+        setUser(data[0]); // Access the first user in the array
+      }
+    };
+
     getUser();
   }, []);
 
-  async function getUser() {
-    const { data, error } = await supabase
-                            .from("users")
-                            .select()
-                            .eq("userid", 2);
-    setUsers(data);
-  }
-  
-  if(user != null){
+  if (error) {
     return (
-    <div className="container">
-      <Navbar /> {/* Sidebar navigation */}
-      <div className="profile-container">
-        <h1>Profile Page</h1>
-        <p>Welcome to the profile page!</p>
-        
-        <p key={user.username}>Username: {user.username}</p>
-        <p key={user.first_name, user.last_name}>Name: {user.first_name} {user.last_name}</p>
-        <p key={user.email}>Email: {user.email}</p>
-        <p key={user.phone}>Phone Number: {user.phone}</p>
-        <p key={user.position}>Job Role: {user.position}</p>
-        <p key={user.payrate}>Pay Rate: ${user.payrate}</p>
-        <p key={user.address}>Address: {user.address}</p>
+      <div className="container">
+        <Navbar />
+        <div className="profile-container">
+          <h1>Error Loading Profile</h1>
+          <p>{error.message}</p>
+        </div>
+      </div>
+    );
+  }
 
-        <button type="button">
-          <Link to="/profileEdit">Edit Profile</Link>
-        </button>
-      </div>
-    </div>
-  );
-  } else {
+  if (!user) {
     return (
+      <div className="container">
+        <Navbar />
+        <div className="profile-container">
+          <h1>Loading Profile...</h1>
+          <p>Please wait while we fetch your data.</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
     <div className="container">
-      <Navbar /> {/* Sidebar navigation */}
+      <Navbar />
       <div className="profile-container">
         <h1>Profile Page</h1>
         <p>Welcome to the profile page!</p>
-        
-        <p>Username: </p>
-        <p>Name: </p>
-        <p>Email: </p>
-        <p>Phone Number: </p>
-        <p>Job Role: </p>
-        <p>Pay Rate: </p>
-        <p>Address: </p>
-        
+        <p>Username: {user.username}</p>
+        <p>Name: {user.first_name} {user.last_name}</p>
+        <p>Email: {user.email}</p>
+        <p>Phone Number: {user.phone}</p>
+        <p>Job Role: {user.position}</p>
+        <p>Pay Rate: ${user.payrate}</p>
+        <p>Address: {user.address}</p>
         <button type="button">
           <Link to="/profileEdit">Edit Profile</Link>
         </button>
       </div>
     </div>
   );
-  }
-  
 }
