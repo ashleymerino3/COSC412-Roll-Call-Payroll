@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";  
-import UserContext from "../context/UserContext";
+import React, { useEffect, useState } from "react";  
+import Navbar from "../components/navbar";
 import "../styles/styles.css";
 import { createClient } from "@supabase/supabase-js";
 
@@ -9,7 +9,6 @@ const supabase = createClient(
 );
 
 export default function Payroll() {
-  const { currentUser } = useContext(UserContext);
   const [payments, setPayments] = useState([]);
   const [totalHours, setTotalHours] = useState({});
   const [loading, setLoading] = useState(true);
