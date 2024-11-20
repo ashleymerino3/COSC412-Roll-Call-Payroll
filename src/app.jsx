@@ -11,7 +11,7 @@ import { UserProvider } from "./context/UserContext";
 
 export default function App() {
   return (
-    <UserProvider>
+  //  <UserProvider>
       <Router>
         <Routes> {/* Use Routes */}
           <Route path="/" element={<Home />} />
@@ -23,6 +23,6 @@ export default function App() {
           <Route path="/schedule" element={<Schedule />} />
         </Routes>
       </Router>
-    </UserProvider>
+  //  </UserProvider>
   );
 }
