@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import UserContext from "../context/UserContext";
 import { Link } from "react-router-dom";
 import Navbar from "../components/navbar";
 import "../styles/styles.css";
@@ -10,6 +11,7 @@ const supabase = createClient(
 );
 
 export default function Profile() {
+  const { currentUser } = useContext(UserContext);
   const [user, setUser] = useState(null); // Initialize as null
   const [error, setError] = useState(null); // Track errors
 

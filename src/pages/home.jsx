@@ -1,10 +1,13 @@
 import * as React from "react";
+import UserContext from "../context/UserContext";
 import Navbar from "../components/navbar"; // Import the Navbar component
 import Stopwatch from "../components/stopwatch";
 import "../styles/styles.css"; 
 
 export default function Home() {
+
   const hello = "Roll Call Payroll System ";
+
 
   return (
     <div className="container">
