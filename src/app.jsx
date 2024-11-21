@@ -7,6 +7,7 @@ import TimeTracking from "./pages/timetracking";
 import Payroll from "./pages/payroll";
 import Schedule from "./pages/schedule";
 import Login from "./pages/login";
+import AdminPage from "./pages/adminPage";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/time-tracking" element={<TimeTracking />} />
         <Route path="/payroll" element={<Payroll />} />
         <Route path="/schedule" element={<Schedule />} />
+        <Route path="/admin" element={<AdminPage />} />
       </Routes>
     </Router>
   );
