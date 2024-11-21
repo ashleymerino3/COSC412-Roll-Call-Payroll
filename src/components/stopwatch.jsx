@@ -5,17 +5,19 @@ const supabase = createClient(
   "https://qrurdemqnmtbzyckapnl.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFydXJkZW1xbm10Ynp5Y2thcG5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIwNjUwMDQsImV4cCI6MjA0NzY0MTAwNH0.jOA0Z8WopLVrbAI4QfO89r2qg8KB9yIxi13hNvcf9cs"
 );
+
 function Stopwatch() {
   const [time, setTime] = useState(0);
   const [isActive, setIsActive] = useState(false);
-  const [currentShift, setCurrentShift] = useState(null); // Track active shift in the database
+  const [currentShift, setCurrentShift] = useState(null);
+  const [shiftNote, setShiftNote] = useState(""); // Track the shift note
   const timerRef = useRef(null);
 
   const startStopwatch = async () => {
     if (!isActive) {
       try {
-        // Start new shift in the database
-        const { data, error } = await supabase
+        // Insert a new shift into the shifts table
+        const { data: shiftData, error: shiftError } = await supabase
           .from("shifts")
           .insert({
             userid: 2, // Replace with logged-in user's ID
@@ -24,18 +26,32 @@ function Stopwatch() {
           .select("*")
           .single();
 
-        if (error) throw error;
+        if (shiftError) throw shiftError;
 
-        setCurrentShift(data);
-        console.log("Shift started:", data);
+        setCurrentShift(shiftData);
+        console.log("Shift started:", shiftData);
 
-        // Start stopwatch
+        // Insert the note into the shift_notes table
+        if (shiftNote.trim() !== "") {
+          const { error: noteError } = await supabase
+            .from("shift_notes")
+            .insert({
+              shift_id: shiftData.shift_id, // Link note to the created shift
+              note_text: shiftNote.trim(),
+            });
+
+          if (noteError) throw noteError;
+
+          console.log("Shift note saved:", shiftNote);
+        }
+
+        // Start the stopwatch
         setIsActive(true);
         timerRef.current = setInterval(() => {
           setTime((prevTime) => prevTime + 1);
-        }, 1000); // Update every second
+        }, 1000);
       } catch (error) {
-        console.error("Error starting shift:", error);
+        console.error("Error starting shift or saving note:", error);
       }
     }
   };
@@ -52,7 +68,7 @@ function Stopwatch() {
         if (error) throw error;
 
         console.log("Shift ended");
-        setCurrentShift(null); // Clear current shift
+        setCurrentShift(null);
 
         // Stop stopwatch
         clearInterval(timerRef.current);
@@ -64,13 +80,12 @@ function Stopwatch() {
   };
 
   const resetStopwatch = () => {
-    // Clear local timer but retain shift info
     clearInterval(timerRef.current);
     setTime(0);
     setIsActive(false);
+    setShiftNote(""); // Clear the shift note
   };
 
-  // Format time in 00:00:00
   const formatTime = (time) => {
     const hours = String(Math.floor(time / 3600)).padStart(2, "0");
     const minutes = String(Math.floor((time % 3600) / 60)).padStart(2, "0");
@@ -81,7 +96,20 @@ function Stopwatch() {
   return (
     <div>
       <h1>Shift Duration: {formatTime(time)}</h1>
-      <button onClick={startStopwatch} disabled={isActive}>
+      {!isActive && (
+        <div>
+          <label>
+            Shift Note:{" "}
+            <input
+              type="text"
+              value={shiftNote}
+              onChange={(e) => setShiftNote(e.target.value)}
+              placeholder="Enter shift note"
+            />
+          </label>
+        </div>
+      )}
+      <button onClick={startStopwatch} disabled={isActive || !shiftNote.trim()}>
         Clock In
       </button>
       <button onClick={stopStopwatch} disabled={!isActive}>
@@ -92,6 +120,7 @@ function Stopwatch() {
         <div>
           <p>Active Shift ID: {currentShift.shift_id}</p>
           <p>Start Time: {new Date(currentShift.start_time_stamp).toLocaleString()}</p>
+          <p>Shift Note: {shiftNote}</p>
         </div>
       )}
     </div>
