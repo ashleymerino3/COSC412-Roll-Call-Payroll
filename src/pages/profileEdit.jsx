@@ -11,29 +11,38 @@ const supabase = createClient(
 );
 
 export default function ProfileEdit() {
-  const [user, setUsers] = useState([]);
+  const [user, setUser] = useState(null); // Initialize as null
+  const [error, setError] = useState(null); // Track errors
 
   useEffect(() => {
+    const getUser = async () => {
+      const { data, error } = await supabase.from("users").select().eq("userid", 2);
+      if (error) {
+        console.error("Error fetching user:", error);
+        setError(error);
+      } else {
+        setUser(data[0]); // Access the first user in the array
+      }
+    };
+
     getUser();
   }, []);
-
-  async function getUser() {
-    const { data, error } = await supabase
-                            .from("users")
-                            .select()
-                            .eq("userid", 2);
-    setUsers(data);
-  }
   
+  //working function but is triggered immediately so it updates with empty fields
   async function updateUserData(){
+    //alert("test 1");
+    const eUsername = document.getElementById("eUsername").innerHTML;
+    //const eUsername = document.getElementsByTagName("input")[0].value;
+
     const { error } = await supabase
         .from("users")
-        .update({ username: document.getElementById("eUsername").value.toString})
+        .update({ username: eUsername})
+        //.update({ username: eUsername})
         .eq("userid", user.userid);
   }
   
-  
   if(user != null){
+    
     return (
     <div className="container">
       <Navbar /> {/* Sidebar navigation */}
@@ -67,7 +76,7 @@ export default function ProfileEdit() {
         <input type="text" id="eAddress" defaultValue={user.address}></input><br></br>
         <p></p>
         
-        <button onclick={updateUserData()}>
+        <button id="button" onclick={updateUserData()} type="button">
           <Link to="/profile">Edit Profile</Link>
         </button>
 
