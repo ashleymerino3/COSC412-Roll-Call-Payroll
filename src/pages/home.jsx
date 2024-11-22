@@ -15,7 +15,17 @@ export default function Home() {
 
       <div className="home-container">
         <h1 className="title">{hello}</h1>
-        <p>Welcome Back {currentUser ? currentUser.name : "User"}!</p>
+        <p className="welcome-message">Welcome Back {currentUser ? currentUser.name : "User"}!</p>
+        <p className="dashboard">Dashboard</p>
+         {/* Image under the Dashboard text */}
+        <div className="image-message-container">
+          <img 
+            src="https://cdn.glitch.global/1443c777-3096-4bdf-9224-8a51355174f8/admin%20profile%20pic.png?v=1732242227147" 
+            alt="Admin Profile" 
+            className="admin-profile-img" 
+          />
+          <p className="manager-message">Due to snow, we will be opening the store two hours late today. Enjoy the extra hours of sleep! - John Doe</p>
+        </div>
         <div className = "stopwatch-container">
         <Stopwatch /> {/* Add the Stopwatch component here */}
         </div>

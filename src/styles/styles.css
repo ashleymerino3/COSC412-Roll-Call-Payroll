@@ -15,20 +15,20 @@ body {
   line-height: 1.5;
 }
 .stopwatch-container {
-  background-color:  #b4ccff;
+  background-color: #8ac9f2;
   padding: 20px;
   margin: 0 auto;
   max-width: 300px;
-  height: 350px;
+  height: 430px;
   text-align: center;
   border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  /*box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);*/
   bottom: 50%;
-  border: 3px solid #333333; 
+  border: 3px solid #006e8a; 
   font-family: 'Cambria', serif;
   position: absolute; /* Position relative to the nearest positioned ancestor */
   bottom: 20px; /* Adjust this value to control the distance from the bottom */
-  left: 50%; /* Horizontally center the box */
+  left: 75%; /* Horizontally center the box */
   transform: translateX(-10%); /* Ensure it's perfectly centered */
 }
 /* Sidebar (Navigation) Styles */
@@ -62,7 +62,7 @@ body {
 }
 
 .side-nav ul li a:hover {
-  background-color: #a3b6dd; /* Highlight on hover */
+  background-color: gray ; /* Highlight on hover */
 }
 
 /* Main content area */
@@ -108,6 +108,24 @@ body {
 .title {
   font-size: 2rem;
   margin-bottom: 10px;
+  transition: transform 0.3s ease;
+}
+.title:hover {
+  transform: translateY(-10px);
+}
+.title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px; 
+  width: 0; 
+  height: 7px; 
+  background-color: #006e8a; 
+  transition: width 0.3s ease;
+}
+
+.title:hover::after {
+  width: 100%; 
 }
 
 /* Ensure images and videos are responsive */
@@ -149,4 +167,66 @@ video {
 .payment-table th {
   background-color: #b4ccff ;
   font-weight: bold;
+}
+.admin-profile-img {
+  width: 100px; /* Set width as needed */
+  height: 100px; /* Set height as needed */
+  border-radius: 50%; /* To make it a circle */
+  margin-top: 10px; /* Adjust space between text and image */
+}
+
+.image-message-container {
+  display: flex;
+  align-items: center; /* Vertically align the items */
+  margin-top: 1rem;
+}
+
+
+.manager-message {
+  font-size: 1rem; /* Adjust font size for the message */
+  color: #333333; /* Adjust the text color */
+}
+.dashboard {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  position: relative;
+}
+
+.dashboard::before, .dashboard::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%; /* Set to 100% to make the underline always visible */
+  height: 2px; /* Thickness of the underline */
+  background-color: #006e8a;
+}
+
+.dashboard::before {
+  bottom: -6px; /* Position the first underline lower */
+  background-color: #69c7ff; /* Color for the first underline */
+}
+
+.dashboard::after {
+  bottom: -2px; /* Position the second underline */
+}
+
+.welcome-message{
+  font-size: 1.5rem; 
+  margin-top: 1rem; 
+  position: relative; 
+  display: inline-block; 
+}
+.welcome-message::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px; 
+  width: 0; 
+  height: 3px; 
+  background-color: orange; 
+  transition: width 0.3s ease;
+}
+
+.welcome-message:hover::after {
+  width: 100%; 
 }
