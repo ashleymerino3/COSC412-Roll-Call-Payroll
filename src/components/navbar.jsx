@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
 import "../styles/styles.css";
+import { UserContext, UserProvider } from "../context/userContext"; //Import userContext for curretUser variable. 
+import { useContext } from "react"; //Import React UserContext feature
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -11,11 +13,12 @@ const supabase = createClient(
 
 export default function Navbar() {
   const [managerAccess, setManagerAccess] = useState(false);
+  const { currentUser } = useContext(UserContext); //Referencing the shared userContext container for currentUser.
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userId = 1; // Replace with the logged-in user's ID (this can come from your authentication flow)
+        const userId = currentUser.userId; // Replace with the logged-in user's ID (this can come from your authentication flow)
 
         const { data, error } = await supabase
           .from("users")

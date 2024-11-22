@@ -4,6 +4,8 @@ import Navbar from "../components/navbar";
 import "../styles/styles.css";
 import { useEffect, useState, useRef } from "react";
 import { createClient } from "@supabase/supabase-js";
+import { UserContext, UserProvider } from "../context/userContext"; //Import userContext for curretUser variable. 
+import { useContext } from "react"; //Import React UserContext feature
 
 const supabase = createClient(
   "https://qrurdemqnmtbzyckapnl.supabase.co",
@@ -13,10 +15,12 @@ const supabase = createClient(
 export default function ProfileEdit() {
   const [user, setUser] = useState(null); // Initialize as null
   const [error, setError] = useState(null); // Track errors
+  
+  const { currentUser } = useContext(UserContext); //Referencing the shared userContext container for currentUser.
 
   useEffect(() => {
     const getUser = async () => {
-      const { data, error } = await supabase.from("users").select().eq("userid", 2);
+      const { data, error } = await supabase.from("users").select().eq("userid", currentUser.userId);
       if (error) {
         console.error("Error fetching user:", error);
         setError(error);
@@ -28,17 +32,92 @@ export default function ProfileEdit() {
     getUser();
   }, []);
   
+  
+  
+  const updateUserDataV2 = async (event) => {
+    event.preventDefault(); // Prevent blank form submission
+    
+    const eUsername = event.target.eUsername.value;
+    const eFirstName = event.target.eFirstName.value;
+    const eLastName = event.target.eLastName.value;
+    const eEmail = event.target.eEmail.value;
+    const ePhone = event.target.ePhone.value;
+    const eJob = event.target.eJob.value;
+    const ePay = event.target.ePay.value;
+    const eAddress = event.target.eAddress.value;
+    
+    
+    try{
+      const { error } = await supabase
+        .from("users")
+        .update({ username: eUsername})
+        .eq("userid", user.userid);
+      await supabase
+        .from("users")
+        .update({ first_name: eFirstName})
+        .eq("userid", user.userid);
+      await supabase
+        .from("users")
+        .update({ last_name: eLastName})
+        .eq("userid", user.userid);
+      await supabase
+        .from("users")
+        .update({ email: eEmail})
+        .eq("userid", user.userid);
+      await supabase
+        .from("users")
+        .update({ phone: ePhone})
+        .eq("userid", user.userid);
+      await supabase
+        .from("users")
+        .update({ position: eJob})
+        .eq("userid", user.userid);
+      await supabase
+        .from("users")
+        .update({ payrate: ePay})
+        .eq("userid", user.userid);
+      await supabase
+        .from("users")
+        .update({ address: eAddress})
+        .eq("userid", user.userid);
+
+      if (error){
+        return;
+      }
+      
+    } catch (err) {
+      console.error("Unexpected error during login:", err);
+    }
+  };
+  
+  
+  
   //working function but is triggered immediately so it updates with empty fields
   async function updateUserData(){
     //alert("test 1");
     const eUsername = document.getElementById("eUsername").innerHTML;
+    const eFirstName = document.getElementById("eFirstName").innerHTML;
+    const eLastName = document.getElementById("eLastName").innerHTML;
+    const eEmail = document.getElementById("eEmail").innerHTML;
+    const ePhone = document.getElementById("ePhone").innerHTML;
+    const eJob = document.getElementById("eJob").innerHTML;
+    const ePay = document.getElementById("ePay").innerHTML;
+    const eAddress = document.getElementById("eAddress").innerHTML;
+
     //const eUsername = document.getElementsByTagName("input")[0].value;
 
     const { error } = await supabase
         .from("users")
         .update({ username: eUsername})
-        //.update({ username: eUsername})
+        .update({ first_name: eFirstName})
+        .update({ last_name: eLastName})
+        .update({ email: eEmail})
+        .update({ phone: ePhone})
+        .update({ position: eJob})
+        .update({ payrate: ePay})
+        .update({ address: eAddress})
         .eq("userid", user.userid);
+    
   }
   
   if(user != null){
@@ -50,34 +129,37 @@ export default function ProfileEdit() {
         <h1>Edit Profile Page</h1>
         <p>Edit your profile</p>
         
-        
-        <label for="eUsername">Username: </label><br></br>
-        <input type="text" id="eUsername" defaultValue={user.username}></input><br></br>
+        <form onSubmit={updateUserDataV2}>
+          <label for="eUsername">Username: </label><br></br>
+          <input type="text" id="eUsername" defaultValue={user.username} required></input><br></br>
           
-        <label for="eFirstName">First name: </label><br></br>
-        <input type="text" id="eFirstName" defaultValue={user.first_name}></input><br></br>
+          <label for="eFirstName">First name: </label><br></br>
+          <input type="text" id="eFirstName" defaultValue={user.first_name} required></input><br></br>
           
-        <label for="eLastName">Last name: </label><br></br>
-        <input type="text" id="eLastName" defaultValue={user.last_name}></input><br></br>
+          <label for="eLastName">Last name: </label><br></br>
+          <input type="text" id="eLastName" defaultValue={user.last_name} required></input><br></br>
           
-        <label for="eEmail">Email: </label><br></br>
-        <input type="text" id="eEmail" defaultValue={user.email}></input><br></br>
+          <label for="eEmail">Email: </label><br></br>
+          <input type="text" id="eEmail" defaultValue={user.email} required></input><br></br>
           
-        <label for="ePhone">Phone Number: </label><br></br>
-        <input type="text" id="ePhone" defaultValue={user.phone}></input><br></br>
+          <label for="ePhone">Phone Number: </label><br></br>
+          <input type="text" id="ePhone" defaultValue={user.phone} required></input><br></br>
           
-        <label for="eJob">Job Role: </label><br></br>
-        <input type="text" id="eJob" defaultValue={user.position}></input><br></br>
+          <label for="eJob">Job Role: </label><br></br>
+          <input type="text" id="eJob" defaultValue={user.position} required></input><br></br>
           
-        <label for="ePay">Pay Rate: </label><br></br>
-        <input type="text" id="ePay" defaultValue={user.payrate}></input><br></br>
+          <label for="ePay">Pay Rate: </label><br></br>
+          <input type="text" id="ePay" defaultValue={user.payrate} required></input><br></br>
           
-        <label for="eAddress">Address: </label><br></br>
-        <input type="text" id="eAddress" defaultValue={user.address}></input><br></br>
-        <p></p>
-        
-        <button id="button" onclick={updateUserData()} type="button">
-          <Link to="/profile">Edit Profile</Link>
+          <label for="eAddress">Address: </label><br></br>
+          <input type="text" id="eAddress" defaultValue={user.address} required></input><br></br>
+          <p></p>
+          
+          <button type="submit">Save Changes</button>
+          
+        </form>
+        <button id="button" type="button">
+          <Link to="/profile">Return to Profile</Link>
         </button>
 
       </div>
@@ -91,7 +173,7 @@ export default function ProfileEdit() {
         <h1>Edit Profile Page</h1>
         <p>Edit your profile</p>
         
-        <form action="/profile">
+        
           <label for="eUsername">Username: </label><br></br>
           <input type="text" id="eUsername" name="eUsername"></input><br></br>
           
@@ -116,8 +198,10 @@ export default function ProfileEdit() {
           <label for="eAddress">Address: </label><br></br>
           <input type="text" id="eAddress" name="eAddress"></input><br></br>
           <p></p>
-          <input type="submit" value="Submit"></input>
-        </form>
+        <button>
+          <Link to="/profile">Return to Profile</Link>
+        </button>
+       
 
       </div>
     </div>
