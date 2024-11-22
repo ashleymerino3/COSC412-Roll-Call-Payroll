@@ -34,7 +34,7 @@ export default function ProfileEdit() {
   
   
   
-  const updateUserDataV2 = async (event) => {
+  const updateUserData = async (event) => {
     event.preventDefault(); // Prevent blank form submission
     
     const eUsername = event.target.eUsername.value;
@@ -90,36 +90,6 @@ export default function ProfileEdit() {
     }
   };
   
-  
-  
-  //working function but is triggered immediately so it updates with empty fields
-  async function updateUserData(){
-    //alert("test 1");
-    const eUsername = document.getElementById("eUsername").innerHTML;
-    const eFirstName = document.getElementById("eFirstName").innerHTML;
-    const eLastName = document.getElementById("eLastName").innerHTML;
-    const eEmail = document.getElementById("eEmail").innerHTML;
-    const ePhone = document.getElementById("ePhone").innerHTML;
-    const eJob = document.getElementById("eJob").innerHTML;
-    const ePay = document.getElementById("ePay").innerHTML;
-    const eAddress = document.getElementById("eAddress").innerHTML;
-
-    //const eUsername = document.getElementsByTagName("input")[0].value;
-
-    const { error } = await supabase
-        .from("users")
-        .update({ username: eUsername})
-        .update({ first_name: eFirstName})
-        .update({ last_name: eLastName})
-        .update({ email: eEmail})
-        .update({ phone: ePhone})
-        .update({ position: eJob})
-        .update({ payrate: ePay})
-        .update({ address: eAddress})
-        .eq("userid", user.userid);
-    
-  }
-  
   if(user != null){
     
     return (
@@ -129,7 +99,7 @@ export default function ProfileEdit() {
         <h1>Edit Profile Page</h1>
         <p>Edit your profile</p>
         
-        <form onSubmit={updateUserDataV2}>
+        <form onSubmit={updateUserData}>
           <label for="eUsername">Username: </label><br></br>
           <input type="text" id="eUsername" defaultValue={user.username} required></input><br></br>
           
