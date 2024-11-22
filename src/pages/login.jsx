@@ -1,14 +1,45 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom"; 
 import "../styles/styles.css"; 
+import { UserContext, UserProvider } from "../context/userContext";  
+import { useContext, useState } from "react";
 
 export default function Login() {
+  const {setUser, supabaseCntx} = useContext(UserContext);
   const navigate = useNavigate(); // Initialize the navigate function
+  const [errorMessage, setErrorMessage] = useState(""); // State for login errors
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault(); // Prevent blank form submission
-    // bryce you can add your login validation logic here
-    navigate("/");
+    setErrorMessage(""); //Clears previous errors.
+    
+    const username = event.target.username.value.trim();
+    const password = event.target.password.value;
+    
+    try{
+      const { data, error } = await supabaseCntx
+      .from("users")
+      .select("*")
+      .eq("username", username)
+      .eq("password", password)
+      .single();
+      
+      if (error || !data){
+        setErrorMessage("Invalid username or password. Please try again.");
+        return;
+      }
+      setUser({
+        userId: data.userid,
+        name: data.first_name,
+        accessLevel: data.manager_access,
+        employerId: data.employerid,
+      });
+      
+      navigate("/");
+    } catch (err) {
+      console.error("Unexpected error during login:", err);
+      setErrorMessage("An error occurred. Please try again later.");
+    }
   };
 
   return (
@@ -39,6 +70,9 @@ export default function Login() {
           />
           <br />
           <br />
+          
+          {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display errors */}
+
 
           <button type="submit">Login</button>
           <br />
