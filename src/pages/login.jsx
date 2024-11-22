@@ -1,19 +1,22 @@
 import * as React from "react";
-import Navbar from "../components/navbar"; // Import the Navbar component
-import Stopwatch from "../components/stopwatch";
+import { useNavigate } from "react-router-dom"; 
 import "../styles/styles.css"; 
 
 export default function Login() {
-  const hello = "Roll Call Payroll System";
+  const navigate = useNavigate(); // Initialize the navigate function
+
+  const handleLogin = (event) => {
+    event.preventDefault(); // Prevent blank form submission
+    // bryce you can add your login validation logic here
+    navigate("/");
+  };
 
   return (
     <div>
-      {/* Add meta and title using React Helmet if needed */}
-      
       <div className="company-name">
         <h2>Roll Call</h2>
       </div>
-      <form action="#" method="POST" className="loginpage">
+      <form onSubmit={handleLogin} className="loginpage">
         <div>
           <label htmlFor="username">Username:</label><br />
           <input

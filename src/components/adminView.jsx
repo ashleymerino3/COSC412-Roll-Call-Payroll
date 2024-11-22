@@ -42,7 +42,7 @@ function AdminView() {
               note_text
             )
           `)
-          .eq("userid", user.userid);
+          .eq("userid", 2);
 
         if (error) {
           console.error("Error fetching shifts:", error);
