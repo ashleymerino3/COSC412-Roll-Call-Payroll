@@ -2,7 +2,7 @@ import * as React from "react";
 import Navbar from "../components/navbar"; // Import the Navbar component
 import Stopwatch from "../components/stopwatch";
 import "../styles/styles.css"; 
-import UserContext from "../context/userContext"; //Import userContext for curretUser variable. 
+import { UserContext, UserProvider } from "../context/userContext"; //Import userContext for curretUser variable. 
 import { useContext } from "react"; //Import React UserContext feature
 
 export default function Home() {

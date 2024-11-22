@@ -5,9 +5,7 @@ import { UserProvider } from "./context/userContext"; //userID universal variabl
 
 ReactDOM.render(
   <React.StrictMode>
-    <UserProvider>
       <App />
-    </UserProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
