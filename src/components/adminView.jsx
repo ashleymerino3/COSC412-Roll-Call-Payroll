@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { createClient } from "@supabase/supabase-js";
+import { UserContext, UserProvider } from "../context/userContext"; //Import userContext for curretUser variable. 
+import { useContext } from "react"; //Import React UserContext feature
 
 const supabase = createClient(
   "https://qrurdemqnmtbzyckapnl.supabase.co",
@@ -7,26 +9,40 @@ const supabase = createClient(
 );
 function AdminView() {
   const [currentView, setCurrentView] = useState("ProfileView");
+  const [users, setUsers] = useState([]);
   const [user, setUser] = useState(null); // Initialize as null
   const [error, setError] = useState(null); // Track errors
   const [shifts, setShifts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [payments, setPayments] = useState([]);
   const [totalHours, setTotalHours] = useState({});
+  const [selectedUser, setSelectedUser] = useState(0);
   
-
+  const { currentUser } = useContext(UserContext); //Referencing the shared userContext container for currentUser.
+  
+  const selectNewUser = async () => {
+    const selectedUserInput = document.getElementById("users").value;
+    const { data, error } = await supabase.from("users").select().eq("username", selectedUserInput);
+    setSelectedUser(data[0].userid);
+    useEffect();
+  }
+  
   useEffect(() => {
-    const getUser = async () => {
-      const { data, error } = await supabase.from("users").select().eq("userid", 2);
+    const getUsers = async () => {
+      const { data, error } = await supabase.from("users").select().eq("employerid", currentUser.userId);
       if (error) {
         console.error("Error fetching user:", error);
         setError(error);
       } else {
-        setUser(data[0]); // Access the first user in the array
+        setUsers(data);
+        setSelectedUser(users[0].userid);
+        //alert(selectedUser);
+        setUser(users[selectedUser]);
       }
     };
-
-    getUser();
+    
+    getUsers();
+    
     
     const fetchShifts = async () => {
       setLoading(true);
@@ -42,7 +58,7 @@ function AdminView() {
               note_text
             )
           `)
-          .eq("userid", 2);
+          .eq("userid", user.userid);
 
         if (error) {
           console.error("Error fetching shifts:", error);
@@ -73,7 +89,7 @@ function AdminView() {
               payrate
             )
           `)
-          .eq("userid", 2); // Filter by user 2
+          .eq("userid", user.userid); // Filter by user 2
 
         if (error) {
           console.error("Error fetching payment history:", error);
@@ -162,31 +178,9 @@ function AdminView() {
     return prevMonth.toLocaleString("default", { month: "long", year: "numeric" }); // Return month and year
   };
   
-  if (error) {
-    return (
-      <div>
-        <h1>Error Loading Data</h1>
-        <p>{error.message}</p>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div>
-        <h1>Loading Data...</h1>
-        <p>Please wait while we fetch your data.</p>
-      </div>
-    );
-  }
-
-  if(currentView === "ProfileView"){
+  const ProfileView = () => {
     return(
-      <div>
-        <button type="button" onClick={setViewProfile}>View Profile</button>
-        <button type="button" onClick={setViewTime}>View Time</button>
-        <button type="button" onClick={setViewPay}>View Pay</button>
-      
+      <div>    
         <p>Welcome to {user.first_name} {user.last_name}'s profile page!</p>
         <p>Username: {user.username}</p>
         <p>Name: {user.first_name} {user.last_name}</p>
@@ -197,13 +191,11 @@ function AdminView() {
         <p>Address: {user.address}</p>
       </div>
     );
-  } else if (currentView ==="TimeView") {
+  };
+  
+  const TimeView = () => {
     return(
-      <div>
-        <button type="button" onClick={setViewProfile}>View Profile</button>
-        <button type="button" onClick={setViewTime}>View Time</button>
-        <button type="button" onClick={setViewPay}>View Pay</button>
-        
+      <div>    
         <p>Welcome to {user.first_name} {user.last_name}'s time tracking page!</p>
         {loading ? (
           <p>Loading shifts...</p>
@@ -242,13 +234,11 @@ function AdminView() {
         )}
       </div>
     );
-  } else if (currentView === "PayView") {
+  };
+  
+  const PayView = () => {
     return(
-      <div>
-        <button type="button" onClick={setViewProfile}>View Profile</button>
-        <button type="button" onClick={setViewTime}>View Time</button>
-        <button type="button" onClick={setViewPay}>View Pay</button>
-        
+      <div>    
         <p>Welcome to {user.first_name} {user.last_name}'s payroll page!</p>
         {loading ? (
           <p>Loading payments...</p>
@@ -293,12 +283,71 @@ function AdminView() {
         )}
       </div>
     );
+  };
+  
+  const MultiView = () => {
+    if(currentView === "ProfileView"){
+    return(
+      <div>
+        {ProfileView()}
+      </div>
+    );
+  } else if (currentView ==="TimeView") {
+    return(
+      <div>
+        {TimeView()}
+      </div>
+    );
+  } else if (currentView === "PayView") {
+    return(
+      <div>
+        {PayView()}
+      </div>
+    );
   } else {
     return(
       <div>
       </div>
     );
   }
+  };
+  
+  if (error) {
+    return (
+      <div>
+        <h1>Error Loading Data</h1>
+        <p>{error.message}</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div>
+        <h1>Loading Data...</h1>
+        <p>Please wait while we fetch your data.</p>
+      </div>
+    );
+  }
+
+    return(
+      <div>
+        <label for="users">Choose a user:</label>
+
+        <select name="users" id="users" onChange = {selectNewUser}>
+          {users.map((user) => (
+            <option value={user.id}>{user.username}</option>
+          ))}
+        </select>
+        <div></div>
+        
+        <button type="button" onClick={setViewProfile}>View Profile</button>
+        <button type="button" onClick={setViewTime}>View Time</button>
+        <button type="button" onClick={setViewPay}>View Pay</button>
+      
+        {MultiView()}
+      </div> 
+    );
 }
 
 export default AdminView;
