@@ -10,6 +10,7 @@ const supabaseCntx = createClient(
 
 export const UserProvider = ({ children }) => {
   const [currentUser, setUser] = useState(null);
+  const [currentSelectedUser, setSelectedUser] = useState({userid:2});
   //Dummy data for testing
   // const [currentUser, setUser] = useState({ 
   //   userId: "2",
@@ -20,7 +21,7 @@ export const UserProvider = ({ children }) => {
 
 
   return (
-    <UserContext.Provider value={{ currentUser, setUser, supabaseCntx }}>
+    <UserContext.Provider value={{ currentUser, setUser, currentSelectedUser, setSelectedUser, supabaseCntx }}>
       {children}
     </UserContext.Provider>
   );
