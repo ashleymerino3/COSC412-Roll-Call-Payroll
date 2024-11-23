@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import "../styles/styles.css";
 import { createClient } from "@supabase/supabase-js";
+import { useContext } from "react";
+import { UserContext } from "../context/userContext";
+
 
 const supabase = createClient(
   "https://qrurdemqnmtbzyckapnl.supabase.co",
@@ -9,14 +12,18 @@ const supabase = createClient(
 );
 
 export default function Payroll() {
+  const { currentUser } = useContext(UserContext);
   const [payments, setPayments] = useState([]);
   const [totalHours, setTotalHours] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!currentUser?.userId) { 
+      return;
+    }
     const fetchPaymentsAndShifts = async () => {
       try {
-        // Fetch payment history for user 2
+        // Fetch payment history for currentUser
         const { data, error } = await supabase
           .from("payment_history")
           .select(`
@@ -28,7 +35,7 @@ export default function Payroll() {
               payrate
             )
           `)
-          .eq("userid", 2); // Filter by user 2
+          .eq("userid", currentUser.userId); // Filter by currentUser
 
         if (error) {
           console.error("Error fetching payment history:", error);
@@ -36,11 +43,11 @@ export default function Payroll() {
           setPayments(data);
         }
 
-        // Fetch shifts for user 2 to calculate total hours
+        // Fetch shifts for currentUser to calculate total hours
         const { data: shiftsData, error: shiftsError } = await supabase
           .from("shifts")
           .select("start_time_stamp, end_time_stamp")
-          .eq("userid", 2); // Filter by user 2
+          .eq("userid", currentUser.userId); // Filter by currentUser
 
         if (shiftsError) {
           console.error("Error fetching shifts:", shiftsError);
@@ -67,7 +74,7 @@ export default function Payroll() {
     };
 
     fetchPaymentsAndShifts();
-  }, []);
+  }, [currentUser]);
 
   // Format the timestamp into a readable date
   const formatDate = (timestamp) => {

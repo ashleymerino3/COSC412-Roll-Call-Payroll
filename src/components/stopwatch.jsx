@@ -1,5 +1,7 @@
 import React, { useState, useRef } from "react";
 import { createClient } from "@supabase/supabase-js";
+import { useContext } from "react";
+import { UserContext } from "../context/userContext";
 
 const supabase = createClient(
   "https://qrurdemqnmtbzyckapnl.supabase.co",
@@ -7,6 +9,7 @@ const supabase = createClient(
 );
 
 function Stopwatch() {
+  const { currentUser } = useContext(UserContext);
   const [time, setTime] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [currentShift, setCurrentShift] = useState(null);
@@ -20,7 +23,7 @@ function Stopwatch() {
         const { data: shiftData, error: shiftError } = await supabase
           .from("shifts")
           .insert({
-            userid: 2, // Replace with logged-in user's ID
+            userid: currentUser.userId, // Replace with logged-in user's ID
             start_time_stamp: new Date().toISOString(),
           })
           .select("*")
