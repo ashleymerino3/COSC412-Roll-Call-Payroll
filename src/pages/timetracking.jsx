@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import "../styles/styles.css";
 import { createClient } from "@supabase/supabase-js";
+import { useContext } from "react";
+import { UserContext } from "../context/userContext";
+
 
 const supabase = createClient(
   "https://qrurdemqnmtbzyckapnl.supabase.co",
@@ -9,6 +12,7 @@ const supabase = createClient(
 );
 
 export default function TimeTracking() {
+  const { currentUser } = useContext(UserContext);
   const [shifts, setShifts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -26,7 +30,7 @@ export default function TimeTracking() {
               note_text
             )
           `)
-          .eq("userid", 2);
+          .eq("userid", currentUser.userId);
 
         if (error) {
           console.error("Error fetching shifts:", error);
@@ -41,7 +45,7 @@ export default function TimeTracking() {
     };
 
     fetchShifts();
-  }, []);
+  }, [currentUser]);
 
   // Format the timestamp into a readable date and time
   const formatDateTime = (timestamp) => {
