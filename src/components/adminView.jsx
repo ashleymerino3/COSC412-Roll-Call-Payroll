@@ -7,23 +7,23 @@ const supabase = createClient(
   "https://qrurdemqnmtbzyckapnl.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFydXJkZW1xbm10Ynp5Y2thcG5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIwNjUwMDQsImV4cCI6MjA0NzY0MTAwNH0.jOA0Z8WopLVrbAI4QfO89r2qg8KB9yIxi13hNvcf9cs"
 );
+
 function AdminView() {
+  const { currentUser } = useContext(UserContext); //Referencing the shared userContext container for currentUser.
+  const { currentSelectedUser, setSelectedUser } = useContext(UserContext); //Referencing the shared userContext container for currentUser.
+  
   const [currentView, setCurrentView] = useState("ProfileView");
   const [users, setUsers] = useState([]);
-  const [user, setUser] = useState(null); // Initialize as null
   const [error, setError] = useState(null); // Track errors
   const [shifts, setShifts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [payments, setPayments] = useState([]);
   const [totalHours, setTotalHours] = useState({});
-  const [selectedUser, setSelectedUser] = useState(0);
-  
-  const { currentUser } = useContext(UserContext); //Referencing the shared userContext container for currentUser.
   
   const selectNewUser = async () => {
     const selectedUserInput = document.getElementById("users").value;
     const { data, error } = await supabase.from("users").select().eq("username", selectedUserInput);
-    setSelectedUser(data[0].userid);
+    setSelectedUser(data[0]);
     useEffect();
   }
   
@@ -35,14 +35,12 @@ function AdminView() {
         setError(error);
       } else {
         setUsers(data);
-        setSelectedUser(users[0].userid);
+        setSelectedUser(data[0]);
         //alert(selectedUser);
-        setUser(users[selectedUser]);
       }
     };
     
     getUsers();
-    
     
     const fetchShifts = async () => {
       setLoading(true);
@@ -58,7 +56,7 @@ function AdminView() {
               note_text
             )
           `)
-          .eq("userid", user.userid);
+          .eq("userid", currentSelectedUser.userid);
 
         if (error) {
           console.error("Error fetching shifts:", error);
@@ -89,7 +87,7 @@ function AdminView() {
               payrate
             )
           `)
-          .eq("userid", user.userid); // Filter by user 2
+          .eq("userid", currentSelectedUser.userid); // Filter by user 2
 
         if (error) {
           console.error("Error fetching payment history:", error);
@@ -181,14 +179,14 @@ function AdminView() {
   const ProfileView = () => {
     return(
       <div>    
-        <p>Welcome to {user.first_name} {user.last_name}'s profile page!</p>
-        <p>Username: {user.username}</p>
-        <p>Name: {user.first_name} {user.last_name}</p>
-        <p>Email: {user.email}</p>
-        <p>Phone Number: {user.phone}</p>
-        <p>Job Role: {user.position}</p>
-        <p>Pay Rate: ${user.payrate}</p>
-        <p>Address: {user.address}</p>
+        <p>Welcome to {currentSelectedUser.first_name} {currentSelectedUser.last_name}'s profile page!</p>
+        <p>Username: {currentSelectedUser.username}</p>
+        <p>Name: {currentSelectedUser.first_name} {currentSelectedUser.last_name}</p>
+        <p>Email: {currentSelectedUser.email}</p>
+        <p>Phone Number: {currentSelectedUser.phone}</p>
+        <p>Job Role: {currentSelectedUser.position}</p>
+        <p>Pay Rate: ${currentSelectedUser.payrate}</p>
+        <p>Address: {currentSelectedUser.address}</p>
       </div>
     );
   };
@@ -196,7 +194,7 @@ function AdminView() {
   const TimeView = () => {
     return(
       <div>    
-        <p>Welcome to {user.first_name} {user.last_name}'s time tracking page!</p>
+        <p>Welcome to {currentSelectedUser.first_name} {currentSelectedUser.last_name}'s time tracking page!</p>
         {loading ? (
           <p>Loading shifts...</p>
         ) : (
@@ -239,7 +237,7 @@ function AdminView() {
   const PayView = () => {
     return(
       <div>    
-        <p>Welcome to {user.first_name} {user.last_name}'s payroll page!</p>
+        <p>Welcome to {currentSelectedUser.first_name} {currentSelectedUser.last_name}'s payroll page!</p>
         {loading ? (
           <p>Loading payments...</p>
         ) : (
@@ -321,7 +319,7 @@ function AdminView() {
     );
   }
 
-  if (!user) {
+  if (!currentSelectedUser) {
     return (
       <div>
         <h1>Loading Data...</h1>
