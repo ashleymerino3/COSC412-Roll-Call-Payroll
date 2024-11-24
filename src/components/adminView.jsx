@@ -41,8 +41,10 @@ function AdminView() {
     };
     
     getUsers();
-    
+    }, [currentUser, setSelectedUser]);
+  useEffect(() => {  
     const fetchShifts = async () => {
+      if (!currentSelectedUser) return;
       setLoading(true);
       try {
         // Fetch shifts and notes for user #2
@@ -73,6 +75,7 @@ function AdminView() {
     fetchShifts();
     
     const fetchPaymentsAndShifts = async () => {
+      if (!currentSelectedUser) return;
       setLoading(true);
       try {
         // Fetch payment history for user 2
@@ -99,7 +102,7 @@ function AdminView() {
         const { data: shiftsData, error: shiftsError } = await supabase
           .from("shifts")
           .select("start_time_stamp, end_time_stamp")
-          .eq("userid", 2); // Filter by user 2
+          .eq("userid", currentSelectedUser.userid); // Filter by user 2
 
         if (shiftsError) {
           console.error("Error fetching shifts:", shiftsError);
@@ -126,7 +129,7 @@ function AdminView() {
     };
 
     fetchPaymentsAndShifts();
-  }, []);
+  }, [currentSelectedUser]);
   
 
   const setViewTime = () => {
