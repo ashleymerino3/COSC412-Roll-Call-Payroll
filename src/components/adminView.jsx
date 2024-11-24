@@ -19,6 +19,8 @@ function AdminView() {
   const [loading, setLoading] = useState(true);
   const [payments, setPayments] = useState([]);
   const [totalHours, setTotalHours] = useState({});
+  const [inputPastMonthVal, setInputPastMonthVal] = useState();
+
   
   const selectNewUser = async () => {
     const selectedUserInput = document.getElementById("users").value;
@@ -147,6 +149,35 @@ function AdminView() {
     setCurrentView("PayView");
   };
   
+  const inputPastMonth = () => {
+    const inputDate = document.getElementById("inputDate").valueAsDate.toISOString();
+    setInputPastMonthVal(getPreviousMonth(inputDate));
+  }
+  
+  const createNewPayment = async () => {
+    const inputDate = document.getElementById("inputDate").valueAsDate.toISOString();
+    const inputPayment = document.getElementById("inputPayment").value;
+    if(inputDate !== null && inputPayment !== null){
+      try{
+        const { error } = await supabase
+            .from("payment_history")
+            .insert({
+              userid: currentSelectedUser.userid,
+              shift_id: 1,
+              payment_date: inputDate,
+              payment_amount: inputPayment,
+            });
+
+      if (error){
+        return;
+      }
+      
+      } catch (err) {
+        console.error("Unexpected error during login:", err);
+      }
+    }
+  };
+  
   // Format the timestamp into a readable date and time
   const formatDateTime = (timestamp) => {
     if (!timestamp) return "N/A";
@@ -241,6 +272,26 @@ function AdminView() {
     return(
       <div>    
         <p>Welcome to {currentSelectedUser.first_name} {currentSelectedUser.last_name}'s payroll page!</p>
+        <p>Create new Payment Date: </p>
+        <table className="payment-table">
+            <thead>
+              <tr>
+                <th>Pay Period</th>
+                <th>Expected Payment Date</th>
+                <th>Actual Payment Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <td>{inputPastMonthVal}</td>
+                  <td><input type="date" id="inputDate" onChange={inputPastMonth} required></input></td>
+                  <td><input type="number" id="inputPayment" required></input></td>
+                </tr>
+            </tbody>
+          </table>
+        <button type="button" onClick={createNewPayment}>Save new Payment Date</button>
+        
+        <p>Preexisting Payment Dates</p>
         {loading ? (
           <p>Loading payments...</p>
         ) : (
