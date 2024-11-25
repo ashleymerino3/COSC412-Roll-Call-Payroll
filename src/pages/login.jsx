@@ -41,51 +41,57 @@ export default function Login() {
       setErrorMessage("An error occurred. Please try again later.");
     }
   };
-
   return (
-    <div>
-      <div className="company-name">
-        <h2>Roll Call</h2>
+    <div className="login-body">
+    <div className="login-container">
+      {/* Header Section */}
+      <div className="login-header">
+        <h2 className="company-title">Roll Call</h2>
       </div>
-      <form onSubmit={handleLogin} className="loginpage">
-        <div>
-          <label htmlFor="username">Username:</label><br />
+
+      {/* Login Form */}
+      <form onSubmit={handleLogin} className="login-form">
+        <div className="login-inputs">
+          {/* Username Field */}
+          <label htmlFor="username" className="input-label">Username:</label>
           <input
             type="text"
             placeholder="Enter your username"
             id="username"
             name="username"
+            className="input-field"
             required
           />
-          <br />
-          <br />
 
-          <label htmlFor="password">Password:</label><br />
+          {/* Password Field */}
+          <label htmlFor="password" className="input-label">Password:</label>
           <input
             type="password"
             placeholder="Enter your password"
             id="password"
             name="password"
+            className="input-field"
             required
           />
-          <br />
-          <br />
-          
-          {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display errors */}
 
+          {/* Error Message */}
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+        </div>
 
-          <button type="submit">Login</button>
-          <br />
-          <br />
-
-          <label>
+        {/* Buttons and Options */}
+        <div className="login-actions">
+          <button type="submit" className="login-button">Login</button>
+          <label className="remember-me">
             <input type="checkbox" defaultChecked name="remember" /> Remember me
           </label>
         </div>
-        <div className="forgotpword">
-          Forgot <a href="#">password?</a>
+
+        {/* Forgot Password Link */}
+        <div className="login-footer">
+          Forgot <a href="#" className="forgot-password-link">password?</a>
         </div>
       </form>
     </div>
+ </div>
   );
 }
