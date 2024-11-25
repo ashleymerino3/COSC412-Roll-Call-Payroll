@@ -14,6 +14,124 @@ body {
   font-family: sans-serif;
   line-height: 1.5;
 }
+.login-body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  background-color: #d8f3f9; 
+  font-family: 'Comic Sans MS', cursive, sans-serif; 
+}
+/* Main Login Container */
+.login-container {
+  width: 400px;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Header Section */
+.login-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.company-title {
+  font-size: 2em;
+  color: #0056b3;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  letter-spacing: 2px;
+}
+
+/* Form Styling */
+.login-form {
+  text-align: center;
+}
+
+/* Input Section */
+.login-inputs {
+  margin-bottom: 20px;
+}
+
+.input-label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+  font-size: 1em;
+  color: #333333;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 2px solid #007bff;
+  border-radius: 10px;
+  font-size: 1.1em;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Action Section (Buttons, Checkbox) */
+.login-actions {
+  margin-bottom: 15px;
+}
+
+.login-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.remember-me {
+  display: block;
+  margin: 10px 0;
+  font-size: 1em;
+  color: #333333;
+  text-align: left;
+}
+
+/* Footer Section */
+.login-footer {
+  text-align: center;
+}
+
+.forgot-password-link {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 1em;
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
 .stopwatch-container {
   background-color: #8ac9f2;
   padding: 20px;
