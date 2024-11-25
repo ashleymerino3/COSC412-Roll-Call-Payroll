@@ -16,8 +16,8 @@ export default function App() {
     <UserProvider>
       <Router>
         <Routes> {/* Use Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element = {<Login />}/>
+          <Route path="/home" element={<Home />} />
+          <Route path="/" element = {<Login />}/>
           <Route path="/profile" element={<Profile />} />
           <Route path="/profileEdit" element={<ProfileEdit />} />
           <Route path="/time-tracking" element={<TimeTracking />} />
