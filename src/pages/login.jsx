@@ -35,7 +35,7 @@ export default function Login() {
         employerId: data.employerid,
       });
       
-      navigate("/");
+      navigate("/home");
     } catch (err) {
       console.error("Unexpected error during login:", err);
       setErrorMessage("An error occurred. Please try again later.");
