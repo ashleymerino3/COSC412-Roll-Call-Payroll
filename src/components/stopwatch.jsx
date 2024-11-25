@@ -121,7 +121,7 @@ function Stopwatch() {
       <button onClick={resetStopwatch}>Reset</button>
       {currentShift && (
         <div>
-          <p>Active Shift ID: {currentShift.shift_id}</p>
+          <p>Enjoy your Shift!</p>
           <p>Start Time: {new Date(currentShift.start_time_stamp).toLocaleString()}</p>
           <p>Shift Note: {shiftNote}</p>
         </div>
