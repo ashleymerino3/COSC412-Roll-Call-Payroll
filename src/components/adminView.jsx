@@ -163,7 +163,6 @@ function AdminView() {
             .from("payment_history")
             .insert({
               userid: currentSelectedUser.userid,
-              shift_id: 1,
               payment_date: inputDate,
               payment_amount: inputPayment,
             });
