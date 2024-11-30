@@ -142,14 +142,12 @@ body {
   height: 430px;
   text-align: center;
   border-radius: 10px;
-  /*box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);*/
-  bottom: 50%;
+  bottom: 30px; 
   border: 3px solid #006e8a; 
   font-family: 'Cambria', serif;
-  position: absolute; /* Position relative to the nearest positioned ancestor */
-  bottom: 70px; /* Adjust this value to control the distance from the bottom */
-  left: 50%; /* Horizontally center the box */
-  transform: translateX(-10%); /* Ensure it's perfectly centered */
+  position: absolute; 
+  left: 50%; 
+  transform: translateX(-50%); 
 }
 /* Sidebar (Navigation) Styles */
 .side-nav {
