@@ -59,15 +59,15 @@ export default function Profile() {
     <div className="container">
       <Navbar />
       <div className="profile-container">
-        <h1>Profile Page</h1>
-        <p>Welcome to the profile page!</p>
-        <p>Username: {user.username}</p>
-        <p>Name: {user.first_name} {user.last_name}</p>
-        <p>Email: {user.email}</p>
-        <p>Phone Number: {user.phone}</p>
-        <p>Job Role: {user.position}</p>
-        <p>Pay Rate: ${user.payrate}</p>
-        <p>Address: {user.address}</p>
+        <h1>Profile</h1>
+         
+        <p><strong>Username:</strong> {user.username}</p>
+        <p><strong>Name:</strong> {user.first_name} {user.last_name}</p>
+        <p><strong>Email:</strong> {user.email}</p>
+        <p><strong>Phone Number:</strong> {user.phone}</p>
+        <p><strong>Job Role:</strong> {user.position}</p>
+        <p><strong>Pay Rate:</strong> ${user.payrate}</p>
+        <p><strong>Address:</strong> {user.address}</p>
         <button type="button">
           <Link to="/profileEdit">Edit Profile</Link>
         </button>
