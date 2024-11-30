@@ -62,7 +62,7 @@ export default function Home() {
 
       <div className="home-container">
         <h1 className="title">Admin Page</h1>
-        <p>Welcome to the admin page {user.first_name} {user.last_name}</p>
+        <p>Welcome to Admin Page {user.first_name} {user.last_name}</p>
         <AdminView />
       </div>
     </div>

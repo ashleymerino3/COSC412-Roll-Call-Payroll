@@ -9,7 +9,7 @@ export default function Schedule() {
       
       <div className="schedule-container">
         <h1>Schedule Page</h1>
-        <p>Welcome to the schedule page!</p>
+        <p>Schedule will be posted soon</p>
       </div>
     </div>
   );

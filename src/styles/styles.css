@@ -13,6 +13,8 @@ body {
   margin: 0;
   font-family: sans-serif;
   line-height: 1.5;
+  align-items: center;
+  background:gray;
 }
 .login-body {
   margin: 0;
@@ -29,7 +31,7 @@ body {
   width: 400px;
   padding: 30px;
   background-color: #ffffff;
-  border-radius: 15px;
+  border-radius: 20px;
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -145,8 +147,8 @@ body {
   border: 3px solid #006e8a; 
   font-family: 'Cambria', serif;
   position: absolute; /* Position relative to the nearest positioned ancestor */
-  bottom: 20px; /* Adjust this value to control the distance from the bottom */
-  left: 75%; /* Horizontally center the box */
+  bottom: 70px; /* Adjust this value to control the distance from the bottom */
+  left: 50%; /* Horizontally center the box */
   transform: translateX(-10%); /* Ensure it's perfectly centered */
 }
 /* Sidebar (Navigation) Styles */
@@ -192,6 +194,9 @@ body {
   height: 100vh;
   font-family: 'Cambria', serif;
 }
+.home-container h1{
+  color: #0056b3;
+}
 .pay-container {
   margin-left: 250px; /* Push content to the right of the sidebar */
   padding: 20px;
@@ -199,20 +204,65 @@ body {
   color: #333333; /* Text color */
   height: 100vh; /* Full height */
 }
-
-.profile-container {
-  margin-left: 250px; /* Push content to the right of the sidebar */
-  padding: 20px;
-  background-color: white; /* Background for the main content */
-  color: #333333; /* Text color */
-  height: 100vh; /* Full height */
+.pay-container h1{
+  color:#0056b3;
+  text-align: center;
 }
+.profile-container {
+  border: 2px solid #cccccc; /* Light gray border */
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px; /* Space inside the box */
+  margin: 20px auto; /* Center the box horizontally */
+  max-width: 600px; /* Limit the box width */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  background-color: #f9f9f9; /* Light background color */
+  font-family: Arial, sans-serif; /* Optional: Font style */
+  text-align: center; /* Center-align text content */
+}
+
+.profile-container h1 {
+  font-size: 24px; /* Title size */
+  margin-bottom: 10px;
+  color: #333333; /* Darker text color */
+}
+
+.profile-container p {
+  font-size: 16px; /* Paragraph size */
+  margin: 8px 0;
+  color: #555555; /* Slightly lighter text */
+}
+
+.profile-container button {
+  background-color: #007bff; /* Button background */
+  color: #ffffff; /* Button text */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block; /* Ensures button fits neatly */
+}
+
+.profile-container button a {
+  color: #ffffff; /* Link color inside button */
+  text-decoration: none;
+}
+
+.profile-container button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
 .schedule-container {
-  margin-left: 250px; /* Push content to the right of the sidebar */
-  padding: 20px;
-  background-color: white; /* Background for the main content */
-  color: #333333; /* Text color */
-  height: 100vh; /* Full height */
+    margin-left: 250px; /* Push content to the right of the sidebar */
+    padding: 40px; /* Increased padding for better spacing */
+    background-color: #ffffff; /* White background for the main content */
+    color: #333333; /* Text color */
+    border: 1px solid #dddddd; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-width: 600px; /* Maximum width */
+    margin: 40px auto; /* Center the container horizontally with top/bottom margin */
+    text-align: center; /* Centered text */
 }
 .time-container {
   margin-left: 250px; /* Push content to the right of the sidebar */
@@ -222,11 +272,20 @@ body {
   height: 100vh; /* Full height */
 }
 
+.time-container h1{
+  text-align:center;
+  color:#0056b3
+}
+
 /* Typography for title */
 .title {
   font-size: 2rem;
   margin-bottom: 10px;
   transition: transform 0.3s ease;
+  color:#CD853F;
+  text-align:center;
+  
+  
 }
 .title:hover {
   transform: translateY(-10px);
@@ -290,13 +349,18 @@ video {
   width: 100px; /* Set width as needed */
   height: 100px; /* Set height as needed */
   border-radius: 50%; /* To make it a circle */
-  margin-top: 10px; /* Adjust space between text and image */
+  margin-top: 20px; /* Adjust space between text and image */
 }
 
 .image-message-container {
-  display: flex;
-  align-items: center; /* Vertically align the items */
+  float: right;
+  height: 100%; /* Vertically align the items */
   margin-top: 1rem;
+  display: flex;
+  bottom: 10px;
+  left: 100px;
+  
+  
 }
 
 
@@ -332,7 +396,8 @@ video {
   font-size: 1.5rem; 
   margin-top: 1rem; 
   position: relative; 
-  display: inline-block; 
+  display: inline-block;
+  
 }
 .welcome-message::after {
   content: "";
@@ -348,3 +413,55 @@ video {
 .welcome-message:hover::after {
   width: 100%; 
 }
+
+/* Notification information */
+.notification-container {
+    position: relative;
+    display: inline-block;
+}
+
+.notification-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.notification-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+    border-radius: 4px;
+}
+
+.notification-container:hover .notification-content {
+    display: block;
+}
+.Profile-view {
+  border: 2px solid #cccccc; /* Light gray border */
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px; /* Space inside the box */
+  max-width: 600px; /* Limit the box width */
+  width: 80%; /* Ensure responsiveness */
+  margin: 20px auto; /* Center the box horizontally */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  background-color: #ffffff; /* White background for the box */
+  font-family: Arial, sans-serif; /* Font style */
+}
+.Profile-view div {
+  text-align: center; /* Center-align the content inside */
+}
+.Profile-view p {
+  font-size: 16px; /* Text size for paragraphs */
+  margin: 10px 0; /* Space between lines */
+  color: #555555; /* Gray text color for better readability */
+}
+
+.Profile-view p:first-of-type {
+  font-weight: bold; /* Make the welcome message stand out */
+  color: #333333; /* Slightly darker text */
+}
+

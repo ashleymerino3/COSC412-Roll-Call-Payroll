@@ -211,15 +211,17 @@ function AdminView() {
   
   const ProfileView = () => {
     return(
+      <div className = "Profile-view">
       <div>    
-        <p>Welcome to {currentSelectedUser.first_name} {currentSelectedUser.last_name}'s profile page!</p>
-        <p>Username: {currentSelectedUser.username}</p>
-        <p>Name: {currentSelectedUser.first_name} {currentSelectedUser.last_name}</p>
-        <p>Email: {currentSelectedUser.email}</p>
-        <p>Phone Number: {currentSelectedUser.phone}</p>
-        <p>Job Role: {currentSelectedUser.position}</p>
-        <p>Pay Rate: ${currentSelectedUser.payrate}</p>
-        <p>Address: {currentSelectedUser.address}</p>
+        <p>{currentSelectedUser.first_name} {currentSelectedUser.last_name}'s Profile</p>
+        <p><strong>Username:</strong> {currentSelectedUser.username}</p>
+        <p><strong>Name:</strong> {currentSelectedUser.first_name} {currentSelectedUser.last_name}</p>
+        <p><strong>Email:</strong> {currentSelectedUser.email}</p>
+        <p><strong>Phone Number:</strong> {currentSelectedUser.phone}</p>
+        <p><strong>Job Role:</strong> {currentSelectedUser.position}</p>
+        <p><strong>Pay Rate:</strong> ${currentSelectedUser.payrate}</p>
+        <p><strong>Address:</strong> {currentSelectedUser.address}</p>
+      </div>
       </div>
     );
   };
